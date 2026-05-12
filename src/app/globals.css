@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-dm-sans: 'DM Sans', sans-serif;
+    --font-cormorant: 'Cormorant Garamond', serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-white font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  ::selection {
+    @apply bg-white text-black;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-xs tracking-widest uppercase text-white/70 hover:text-white transition-colors duration-200;
+  }
+
+  .sidebar-link {
+    @apply block text-2xl font-display font-light tracking-widest uppercase text-white/60 hover:text-white transition-colors duration-200 py-3;
+  }
+
+  .work-grid-item {
+    @apply relative block w-full overflow-hidden cursor-pointer;
+  }
+
+  .work-hover-overlay {
+    @apply absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center;
+  }
+
+  .form-input {
+    @apply w-full bg-transparent border-b border-border text-white text-sm placeholder-muted py-3 focus:outline-none focus:border-white transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply text-xs tracking-widest uppercase text-black bg-white px-8 py-3 hover:bg-white/90 transition-colors duration-200 font-medium;
+  }
+
+  .btn-ghost {
+    @apply text-xs tracking-widest uppercase text-white border border-border px-8 py-3 hover:border-white transition-colors duration-200;
+  }
+
+  .admin-card {
+    @apply bg-surface border border-border rounded-sm p-6;
+  }
+
+  .admin-input {
+    @apply w-full bg-surface-hover border border-border text-white text-sm placeholder-muted px-4 py-2.5 rounded-sm focus:outline-none focus:border-white transition-colors duration-200;
+  }
+
+  .admin-label {
+    @apply block text-xs tracking-widest uppercase text-secondary mb-2;
+  }
+}
