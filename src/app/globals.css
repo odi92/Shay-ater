@@ -36,14 +36,6 @@
     @apply block text-2xl font-display font-light tracking-widest uppercase text-white/60 hover:text-white transition-colors duration-200 py-3;
   }
 
-  .work-grid-item {
-    @apply relative block w-full overflow-hidden cursor-pointer;
-  }
-
-  .work-hover-overlay {
-    @apply absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center;
-  }
-
   .form-input {
     @apply w-full bg-transparent border-b border-border text-white text-sm placeholder-muted py-3 focus:outline-none focus:border-white transition-colors duration-200;
   }

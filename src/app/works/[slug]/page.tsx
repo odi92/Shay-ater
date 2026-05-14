@@ -56,54 +56,47 @@ export default async function WorkPage({ params }: PageProps) {
   const credits = formatCredits(work.credits);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-black">
       <Header />
 
-      <main className="flex-1 pt-16">
-        <div className="max-w-5xl mx-auto px-4 md:px-8 py-12">
+      <main className="flex-1 pt-24 pb-12">
+        <div className="max-w-5xl mx-auto px-4 md:px-8">
           <WorkCarousel work={work} />
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="md:col-span-2">
-              <p className="text-xs tracking-widest uppercase text-secondary mb-3">
-                {work.type}
-              </p>
-              <h1 className="font-display font-light text-3xl md:text-4xl text-white leading-tight mb-6">
-                {work.title}
-              </h1>
-              {work.description && (
-                <p className="text-secondary text-sm leading-relaxed">{work.description}</p>
-              )}
-              {(work.festival ?? (work.awards && work.awards.length > 0)) && (
-                <div className="mt-6 space-y-2">
-                  {work.festival && (
-                    <p className="text-xs text-secondary">
-                      <span className="text-muted">Premiered at </span>
-                      {work.festival}
-                    </p>
-                  )}
-                  {work.awards?.map((award, i) => (
-                    <p key={i} className="text-xs text-secondary">
-                      {award}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div className="mt-12">
+            <p className="text-xs text-white/50 uppercase tracking-widest mb-2">
+              {work.type}
+            </p>
+            <h1 className="font-display font-light text-4xl text-white mb-6">
+              {work.title}
+            </h1>
 
             {credits.length > 0 && (
-              <div>
-                <h2 className="text-xs tracking-widest uppercase text-muted mb-6">Credits</h2>
-                <dl className="space-y-4">
-                  {credits.map(({ label, value }) => (
-                    <div key={label}>
-                      <dt className="text-xs tracking-widest uppercase text-muted mb-1">
-                        {label}
-                      </dt>
-                      <dd className="text-sm text-secondary">{value}</dd>
-                    </div>
-                  ))}
-                </dl>
+              <dl className="space-y-3 mb-8">
+                {credits.map(({ label, value }) => (
+                  <div key={label} className="flex gap-4">
+                    <dt className="text-xs text-white/40 uppercase tracking-widest w-32 shrink-0">
+                      {label}
+                    </dt>
+                    <dd className="text-sm text-white/70">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+
+            {(work.festival ?? (work.awards && work.awards.length > 0)) && (
+              <div className="space-y-2">
+                {work.festival && (
+                  <p className="text-xs text-white/50">
+                    <span className="text-white/30">Premiered at </span>
+                    {work.festival}
+                  </p>
+                )}
+                {work.awards?.map((award, i) => (
+                  <p key={i} className="text-xs text-white/50">
+                    {award}
+                  </p>
+                ))}
               </div>
             )}
           </div>

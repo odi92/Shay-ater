@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#0a0a0a',
-        surface: '#141414',
+        background: '#000000',
+        surface: '#111111',
         'surface-hover': '#1c1c1c',
         border: '#222222',
         muted: '#555555',

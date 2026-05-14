@@ -1,7 +1,6 @@
+import Link from 'next/link';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { validateSiteSettings } from '@/lib/validations';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { VideoPlayer } from '@/components/VideoPlayer';
 
 async function getSiteSettings() {
@@ -18,31 +17,71 @@ async function getSiteSettings() {
 export default async function HomePage() {
   const settings = await getSiteSettings();
   const videoUrl = settings.homepageVideoUrl;
+  const instagramUrl = settings.socialInstagram;
+  const imdbUrl = settings.socialImdb;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Header />
+    <div className="min-h-screen bg-black flex flex-col items-center justify-between py-16 px-8">
+      {/* Title block */}
+      <div className="flex flex-col items-center text-center">
+        <h1 className="font-display font-light text-7xl md:text-8xl text-white">
+          Shay Ater
+        </h1>
+        <p className="font-sans text-sm text-white/70 mt-2">
+          Director of Photography
+        </p>
+      </div>
 
-      <main className="flex-1 flex flex-col items-center justify-center pt-16">
-        {videoUrl ? (
-          <div className="w-full max-w-5xl mx-auto px-4 md:px-8 py-12">
-            <div className="w-full aspect-video relative">
-              <VideoPlayer url={videoUrl} title="Shay Ater — Showreel" className="absolute inset-0" />
-            </div>
+      {/* Nav row */}
+      <nav className="max-w-2xl w-full flex justify-between">
+        <Link href="/lets-talk" className="font-sans text-sm text-white hover:text-white/70 transition-colors duration-200">
+          Let&apos;s Talk
+        </Link>
+        <Link href="/works" className="font-sans text-sm text-white hover:text-white/70 transition-colors duration-200">
+          Selected Works
+        </Link>
+        <Link href="/about" className="font-sans text-sm text-white hover:text-white/70 transition-colors duration-200">
+          About
+        </Link>
+      </nav>
+
+      {/* Video player */}
+      {videoUrl ? (
+        <div className="max-w-2xl w-full">
+          <div className="w-full aspect-video relative">
+            <VideoPlayer url={videoUrl} title="Shay Ater — Showreel" className="absolute inset-0" />
           </div>
-        ) : (
-          <div className="w-full max-w-5xl mx-auto px-4 md:px-8 py-24 text-center">
-            <h1 className="font-display font-light text-5xl md:text-7xl text-white/20 tracking-widest uppercase">
-              Shay Ater
-            </h1>
-            <p className="mt-6 text-muted text-xs tracking-widest uppercase">
-              Filmmaker
-            </p>
-          </div>
+        </div>
+      ) : (
+        <div className="max-w-2xl w-full" />
+      )}
+
+      {/* Social footer */}
+      <div className="flex items-center gap-6">
+        {imdbUrl && (
+          <a
+            href={imdbUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-sans text-sm text-white/70 hover:text-white transition-colors duration-200"
+          >
+            IMDb
+          </a>
         )}
-      </main>
-
-      <Footer settings={settings} />
+        {instagramUrl && (
+          <a
+            href={instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="text-white/70 hover:text-white transition-colors duration-200"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </a>
+        )}
+      </div>
     </div>
   );
 }

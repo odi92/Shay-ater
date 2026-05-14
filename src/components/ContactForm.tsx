@@ -1,9 +1,14 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import type { ContactFormData } from '@/types';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
+
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
 
 function extractErrorMessage(body: unknown): string {
   if (typeof body !== 'object' || body === null) return 'Something went wrong';
@@ -14,10 +19,9 @@ function extractErrorMessage(body: unknown): string {
 export function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [formData, setFormData] = useState<ContactFormData>({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    subject: '',
     message: '',
   });
 
@@ -37,7 +41,7 @@ export function ContactForm() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, subject: 'Contact from website' }),
       });
 
       const bodyRaw: unknown = await res.json().catch(() => null);
@@ -47,7 +51,7 @@ export function ContactForm() {
       }
 
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', message: '' });
     } catch (err) {
       setStatus('error');
       setErrorMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
@@ -56,14 +60,14 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="py-12">
+      <div className="border border-white/20 p-8 py-12 text-center">
         <p className="text-white font-display font-light text-2xl mb-3">Message sent.</p>
-        <p className="text-secondary text-sm">
+        <p className="font-sans text-sm text-white/60">
           Thank you for reaching out. I&apos;ll get back to you soon.
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="mt-8 text-xs tracking-widest uppercase text-secondary hover:text-white transition-colors duration-200"
+          className="mt-8 text-xs text-white/50 hover:text-white transition-colors duration-200"
         >
           Send another
         </button>
@@ -72,11 +76,13 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-8" noValidate>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="border border-white/20 p-8">
+      <p className="font-sans font-semibold text-sm text-white text-center mb-6">Contact Me</p>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
         <div>
-          <label htmlFor="name" className="block text-xs tracking-widest uppercase text-secondary mb-3">
-            Name
+          <label htmlFor="name" className="block text-xs text-white/60 mb-1">
+            Name:
           </label>
           <input
             id="name"
@@ -85,14 +91,14 @@ export function ContactForm() {
             required
             value={formData.name}
             onChange={handleChange}
-            className="form-input"
-            placeholder="Your name"
+            className="w-full bg-transparent border-b border-white/30 text-white text-sm py-2 focus:outline-none focus:border-white transition-colors"
             autoComplete="name"
           />
         </div>
+
         <div>
-          <label htmlFor="email" className="block text-xs tracking-widest uppercase text-secondary mb-3">
-            Email
+          <label htmlFor="email" className="block text-xs text-white/60 mb-1">
+            Email:
           </label>
           <input
             id="email"
@@ -101,58 +107,39 @@ export function ContactForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="form-input"
-            placeholder="your@email.com"
+            className="w-full bg-transparent border-b border-white/30 text-white text-sm py-2 focus:outline-none focus:border-white transition-colors"
             autoComplete="email"
           />
         </div>
-      </div>
 
-      <div>
-        <label htmlFor="subject" className="block text-xs tracking-widest uppercase text-secondary mb-3">
-          Subject
-        </label>
-        <input
-          id="subject"
-          name="subject"
-          type="text"
-          required
-          value={formData.subject}
-          onChange={handleChange}
-          className="form-input"
-          placeholder="What&apos;s this about?"
-        />
-      </div>
+        <div>
+          <label htmlFor="message" className="block text-xs text-white/60 mb-1">
+            Your Message here:
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            value={formData.message}
+            onChange={handleChange}
+            className="w-full bg-transparent border-b border-white/30 text-white text-sm py-2 focus:outline-none focus:border-white transition-colors resize-none h-24"
+          />
+        </div>
 
-      <div>
-        <label htmlFor="message" className="block text-xs tracking-widest uppercase text-secondary mb-3">
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={6}
-          value={formData.message}
-          onChange={handleChange}
-          className="form-input resize-none"
-          placeholder="Your message..."
-        />
-      </div>
+        {status === 'error' && (
+          <p className="text-red-400 text-sm">{errorMessage}</p>
+        )}
 
-      {status === 'error' && (
-        <p className="text-red-400 text-sm">{errorMessage}</p>
-      )}
-
-      <div>
-        <button
-          type="submit"
-          disabled={status === 'loading'}
-          className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {status === 'loading' ? 'Sending...' : 'Send message'}
-        </button>
-      </div>
-    </form>
+        <div className="flex justify-end mt-4">
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            className="text-xs border border-white/40 px-4 py-1.5 text-white hover:bg-white hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {status === 'loading' ? 'Sending...' : 'Send'}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

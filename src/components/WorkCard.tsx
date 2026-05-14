@@ -12,7 +12,7 @@ export function WorkCard({ work }: Props) {
   const coverMedia = work.media[0];
 
   return (
-    <Link href={`/works/${work.slug}`} className="work-grid-item group">
+    <Link href={`/works/${work.slug}`} className="relative block w-full overflow-hidden cursor-pointer group">
       <div className={`w-full ${aspectClass} bg-surface relative`}>
         {coverMedia ? (
           <Image
@@ -27,7 +27,8 @@ export function WorkCard({ work }: Props) {
             <span className="text-muted text-xs tracking-widest uppercase">No image</span>
           </div>
         )}
-        <div className="work-hover-overlay">
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="text-center px-8">
             <p className="text-white text-xs tracking-widest uppercase mb-2">{work.type}</p>
             <h2 className="text-white font-display font-light text-2xl md:text-3xl leading-tight">

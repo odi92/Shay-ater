@@ -21,53 +21,59 @@ async function getSiteSettings() {
   }
 }
 
-const DEFAULT_ABOUT_TEXT = `Shay Ater is a filmmaker and director of photography based in Tel Aviv, Israel.
+const DEFAULT_ABOUT_TEXT = `I am a director of photography focused on narrative filmmaking, music videos, and dance videos. My approach is guided by a commitment to storytelling: each shot must be visually precise and expressive, while serving the film as a whole.
 
-His work spans short films, music videos, and documentary projects. He brings a deeply personal visual language to every project, shaped by years of studying light, composition, and the human experience on screen.
+I try to keep my imagination flexible and challenge myself every work anew. I work through light, movement, and careful attention to the emotional world of the characters.
 
-His films have screened at international festivals including Cannes Film Festival La Cinef, Jerusalem Film Festival, Haifa Film Festival, Warsaw Film Festival, and TLVFest.`;
+My recent work includes "It's No Time For Pop", selected for Cannes Festival La Cineff Competition, as well as "Tshuva" for which I was awarded Best Cinematography at TISFF 2024.`;
 
 export default async function AboutPage() {
   const settings = await getSiteSettings();
   const aboutText = settings.aboutText ?? DEFAULT_ABOUT_TEXT;
-  const aboutTitle = settings.aboutTitle ?? 'About';
   const aboutImageUrl = settings.aboutImageUrl;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-black">
       <Header />
 
-      <main className="flex-1 pt-16">
-        <div className="max-w-5xl mx-auto px-8 md:px-12 py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
-            <div>
-              <h1 className="font-display font-light text-4xl md:text-5xl text-white mb-12 leading-tight">
-                {aboutTitle}
-              </h1>
-              <div className="space-y-6">
+      <main className="flex-1 pt-24">
+        <div className="max-w-5xl mx-auto px-8 py-12">
+          {/* Mobile: stack title, text, image */}
+          {/* Desktop: two columns — left text (right-justified), right heading + image */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+            {/* Left column: text paragraphs, right-justified */}
+            <div className="text-right order-2 md:order-1">
+              <div className="space-y-6 mt-0 md:mt-16">
                 {aboutText.split('\n\n').map((paragraph, i) => (
-                  <p key={i} className="text-secondary text-sm leading-relaxed">
+                  <p key={i} className="font-sans text-sm text-white/70 leading-relaxed">
                     {paragraph}
                   </p>
                 ))}
               </div>
             </div>
 
-            <div className="aspect-[3/4] relative bg-surface overflow-hidden">
-              {aboutImageUrl ? (
-                <Image
-                  src={aboutImageUrl}
-                  alt="Shay Ater"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-muted text-xs tracking-widest uppercase">Photo</span>
-                </div>
-              )}
+            {/* Right column: "About" heading + image */}
+            <div className="order-1 md:order-2">
+              <h1 className="font-display font-light text-4xl text-white mb-8 text-center md:text-left">
+                About
+              </h1>
+
+              <div className="aspect-[3/4] relative bg-surface overflow-hidden">
+                {aboutImageUrl ? (
+                  <Image
+                    src={aboutImageUrl}
+                    alt="Shay Ater"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-muted text-xs tracking-widest uppercase">Photo</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

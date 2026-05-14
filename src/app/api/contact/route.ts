@@ -4,13 +4,19 @@ import { sendContactEmail } from '@/lib/email';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import type { ContactFormData } from '@/types';
 
-function isContactFormData(data: unknown): data is ContactFormData {
+interface ContactBody {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+}
+
+function isContactBody(data: unknown): data is ContactBody {
   if (typeof data !== 'object' || data === null) return false;
   const d = data as Record<string, unknown>;
   return (
     typeof d['name'] === 'string' && d['name'].trim().length > 0 &&
     typeof d['email'] === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d['email']) &&
-    typeof d['subject'] === 'string' && d['subject'].trim().length > 0 &&
     typeof d['message'] === 'string' && d['message'].trim().length > 0
   );
 }
@@ -23,9 +29,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
 
-  if (!isContactFormData(body)) {
+  if (!isContactBody(body)) {
     return NextResponse.json(
-      { error: 'Name, email, subject, and message are required' },
+      { error: 'Name, email, and message are required' },
       { status: 400 }
     );
   }
@@ -33,7 +39,7 @@ export async function POST(request: NextRequest) {
   const formData: ContactFormData = {
     name: body.name.trim(),
     email: body.email.trim(),
-    subject: body.subject.trim(),
+    subject: (body.subject?.trim() ?? '') || 'Contact from website',
     message: body.message.trim(),
   };
 

@@ -46,15 +46,17 @@ function ThumbnailItem({
   item,
   onClick,
   isActive,
+  aspectClass,
 }: {
   item: CarouselItem;
   onClick: () => void;
   isActive: boolean;
+  aspectClass: string;
 }) {
   return (
     <button
       onClick={onClick}
-      className={`relative aspect-video overflow-hidden block w-full transition-opacity duration-200 ${
+      className={`relative ${aspectClass} overflow-hidden block w-full transition-opacity duration-200 ${
         isActive ? 'opacity-30 cursor-default' : 'opacity-60 hover:opacity-100'
       }`}
       aria-pressed={isActive}
@@ -66,7 +68,7 @@ function ThumbnailItem({
             alt="Video thumbnail"
             fill
             className="object-cover"
-            sizes="33vw"
+            sizes="25vw"
           />
         ) : (
           <div className="absolute inset-0 bg-surface flex items-center justify-center">
@@ -83,7 +85,7 @@ function ThumbnailItem({
           </div>
         )
       ) : (
-        <Image src={item.url} alt="" fill className="object-cover" sizes="33vw" />
+        <Image src={item.url} alt="" fill className="object-cover" sizes="25vw" />
       )}
     </button>
   );
@@ -100,7 +102,7 @@ function MainItem({ item, title }: { item: CarouselItem; title: string }) {
         alt={title}
         fill
         className="object-cover"
-        sizes="(max-width: 768px) 100vw, 80vw"
+        sizes="(max-width: 768px) 100vw, 66vw"
         priority
       />
     );
@@ -135,24 +137,44 @@ export function WorkCarousel({ work }: Props) {
 
   return (
     <div className="w-full">
-      {/* Main display */}
-      <div className={`w-full ${aspectClass} relative bg-surface`}>
-        {mainItem !== undefined && <MainItem item={mainItem} title={work.title} />}
-      </div>
-
-      {/* Thumbnail grid — 3 per row */}
-      {otherItems.length > 0 && (
-        <div className="grid grid-cols-3 gap-1 mt-1">
-          {otherItems.map(({ item, idx }) => (
-            <ThumbnailItem
-              key={idx}
-              item={item}
-              onClick={() => setActiveIndex(idx)}
-              isActive={idx === activeIndex}
-            />
-          ))}
+      {/* Desktop: side-by-side. Mobile: stacked */}
+      <div className="flex flex-col md:flex-row gap-2">
+        {/* Main display */}
+        <div className={`flex-1 md:w-2/3 ${aspectClass} relative bg-surface`}>
+          {mainItem !== undefined && <MainItem item={mainItem} title={work.title} />}
         </div>
-      )}
+
+        {/* Thumbnails */}
+        {otherItems.length > 0 && (
+          <>
+            {/* Desktop: stacked column on right */}
+            <div className="hidden md:flex flex-col gap-2 w-1/3">
+              {otherItems.map(({ item, idx }) => (
+                <ThumbnailItem
+                  key={idx}
+                  item={item}
+                  onClick={() => setActiveIndex(idx)}
+                  isActive={idx === activeIndex}
+                  aspectClass={aspectClass}
+                />
+              ))}
+            </div>
+
+            {/* Mobile: 2-column grid below */}
+            <div className="grid grid-cols-2 gap-1 md:hidden">
+              {otherItems.map(({ item, idx }) => (
+                <ThumbnailItem
+                  key={idx}
+                  item={item}
+                  onClick={() => setActiveIndex(idx)}
+                  isActive={idx === activeIndex}
+                  aspectClass={aspectClass}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
