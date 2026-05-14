@@ -17,9 +17,11 @@ async function getWorks() {
       .from('works')
       .select('*')
       .order('order_index', { ascending: true });
+    console.log('[works] data count:', data?.length, 'error:', error?.message);
     if (error) return [];
     return validateWorks(data ?? []);
-  } catch {
+  } catch (e) {
+    console.log('[works] exception:', e);
     return [];
   }
 }
