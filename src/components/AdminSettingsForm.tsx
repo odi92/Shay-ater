@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { createClientSupabaseClient } from '@/lib/supabase';
 import type { SiteSettings } from '@/types';
+import { CloudinaryUpload } from './CloudinaryUpload';
 
 interface Props {
   settings: SiteSettings;
@@ -122,16 +123,22 @@ export function AdminSettingsForm({ settings }: Props) {
           <p className="text-xs text-muted mt-1">Separate paragraphs with a blank line.</p>
         </div>
         <div>
-          <label className="admin-label" htmlFor="aboutImageUrl">Photo URL</label>
-          <input
-            id="aboutImageUrl"
-            name="aboutImageUrl"
-            type="url"
-            value={form.aboutImageUrl}
-            onChange={handleChange}
-            className="admin-input"
-            placeholder="https://..."
-          />
+          <label className="admin-label" htmlFor="aboutImageUrl">Photo</label>
+          <div className="flex gap-3 items-start">
+            <input
+              id="aboutImageUrl"
+              name="aboutImageUrl"
+              type="url"
+              value={form.aboutImageUrl}
+              onChange={handleChange}
+              className="admin-input flex-1"
+              placeholder="https://..."
+            />
+            <CloudinaryUpload
+              label="Upload"
+              onUpload={(url) => setForm((prev) => ({ ...prev, aboutImageUrl: url }))}
+            />
+          </div>
         </div>
       </div>
 

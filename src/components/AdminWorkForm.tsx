@@ -4,7 +4,9 @@ import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientSupabaseClient } from '@/lib/supabase';
 import { slugify } from '@/lib/utils';
-import type { Work, AspectRatio } from '@/types';
+import type { Work, AspectRatio, WorkMedia } from '@/types';
+import { CloudinaryUpload } from './CloudinaryUpload';
+import Image from 'next/image';
 
 interface Props {
   work?: Work;
@@ -52,6 +54,7 @@ function workToFormState(work?: Work): FormState {
 export function AdminWorkForm({ work }: Props) {
   const router = useRouter();
   const [form, setForm] = useState<FormState>(workToFormState(work));
+  const [media, setMedia] = useState<WorkMedia[]>(work?.media ?? []);
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -95,6 +98,7 @@ export function AdminWorkForm({ work }: Props) {
         additionalFilming: form.additionalFilming.trim() || undefined,
       },
       order_index: Number(form.orderIndex) || 0,
+      media,
     };
 
     if (isEditing && work) {
@@ -105,7 +109,7 @@ export function AdminWorkForm({ work }: Props) {
         return;
       }
     } else {
-      const { error } = await supabase.from('works').insert({ ...payload, media: [] });
+      const { error } = await supabase.from('works').insert(payload);
       if (error) {
         setStatus('error');
         setErrorMessage(error.message);
@@ -237,6 +241,34 @@ export function AdminWorkForm({ work }: Props) {
             placeholder={"Best Short Film, TLVFest\nBest Cinematography, TISFF"}
           />
         </div>
+      </div>
+
+      {/* Media */}
+      <div className="admin-card space-y-6">
+        <h2 className="text-xs tracking-widest uppercase text-secondary">Media</h2>
+        <p className="text-xs text-muted">Upload images for this work. The first image will be used as the cover.</p>
+        {media.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {media.map((item, i) => (
+              <div key={item.url} className="relative group aspect-video bg-surface rounded overflow-hidden">
+                <Image src={item.url} alt={`Media ${i + 1}`} fill className="object-cover" sizes="200px" />
+                <button
+                  type="button"
+                  onClick={() => setMedia((prev) => prev.filter((_, idx) => idx !== i))}
+                  className="absolute top-1 right-1 bg-black/70 text-white text-xs px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <CloudinaryUpload
+          label="+ Add Image"
+          onUpload={(url) =>
+            setMedia((prev) => [...prev, { type: 'image', url, order: prev.length }])
+          }
+        />
       </div>
 
       {/* Credits */}
