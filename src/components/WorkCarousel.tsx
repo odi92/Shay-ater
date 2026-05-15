@@ -68,7 +68,7 @@ function ThumbnailItem({
             alt="Video thumbnail"
             fill
             className="object-cover"
-            sizes="25vw"
+            sizes="33vw"
           />
         ) : (
           <div className="absolute inset-0 bg-surface flex items-center justify-center">
@@ -85,7 +85,7 @@ function ThumbnailItem({
           </div>
         )
       ) : (
-        <Image src={item.url} alt="" fill className="object-cover" sizes="25vw" />
+        <Image src={item.url} alt="" fill className="object-cover" sizes="33vw" />
       )}
     </button>
   );
@@ -136,45 +136,26 @@ export function WorkCarousel({ work }: Props) {
     .filter(({ idx }) => idx !== activeIndex);
 
   return (
-    <div className="w-full">
-      {/* Desktop: side-by-side. Mobile: stacked */}
-      <div className="flex flex-col md:flex-row gap-2">
-        {/* Main display */}
-        <div className={`flex-1 md:w-2/3 ${aspectClass} relative bg-surface`}>
-          {mainItem !== undefined && <MainItem item={mainItem} title={work.title} />}
-        </div>
-
-        {/* Thumbnails */}
-        {otherItems.length > 0 && (
-          <>
-            {/* Desktop: stacked column on right */}
-            <div className="hidden md:flex flex-col gap-2 w-1/3">
-              {otherItems.map(({ item, idx }) => (
-                <ThumbnailItem
-                  key={idx}
-                  item={item}
-                  onClick={() => setActiveIndex(idx)}
-                  isActive={idx === activeIndex}
-                  aspectClass={aspectClass}
-                />
-              ))}
-            </div>
-
-            {/* Mobile: 2-column grid below */}
-            <div className="grid grid-cols-2 gap-1 md:hidden">
-              {otherItems.map(({ item, idx }) => (
-                <ThumbnailItem
-                  key={idx}
-                  item={item}
-                  onClick={() => setActiveIndex(idx)}
-                  isActive={idx === activeIndex}
-                  aspectClass={aspectClass}
-                />
-              ))}
-            </div>
-          </>
-        )}
+    <div className="w-full flex flex-col gap-1">
+      {/* Main display — full width */}
+      <div className={`w-full ${aspectClass} relative bg-surface`}>
+        {mainItem !== undefined && <MainItem item={mainItem} title={work.title} />}
       </div>
+
+      {/* Thumbnails — horizontal row of 3 */}
+      {otherItems.length > 0 && (
+        <div className="grid grid-cols-3 gap-1">
+          {otherItems.map(({ item, idx }) => (
+            <ThumbnailItem
+              key={idx}
+              item={item}
+              onClick={() => setActiveIndex(idx)}
+              isActive={idx === activeIndex}
+              aspectClass={aspectClass}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
