@@ -38,42 +38,36 @@ export default async function AboutPage() {
 
       <main className="flex-1 pt-24">
         <div className="max-w-5xl mx-auto px-8 py-12">
-          {/* Mobile: stack title, text, image */}
-          {/* Desktop: two columns — left text (right-justified), right heading + image */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            {/* Left column: text paragraphs, right-justified */}
-            <div className="text-right order-2 md:order-1">
-              <div className="space-y-6 mt-0 md:mt-16">
-                {aboutText.split('\n\n').map((paragraph, i) => (
-                  <p key={i} className="font-sans text-sm text-white/70 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+          {/* "About" title — centered above both columns */}
+          <h1 className="font-display text-5xl text-white text-center mb-16">About</h1>
+
+          {/* Two columns: text left, image right */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            {/* Left column: bio text, justified */}
+            <div className="space-y-7">
+              {aboutText.split('\n\n').map((paragraph, i) => (
+                <p key={i} className="font-sans text-base text-white leading-[1.85] text-justify">
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
-            {/* Right column: "About" heading + image */}
-            <div className="order-1 md:order-2">
-              <h1 className="font-display font-light text-4xl text-white mb-8 text-center md:text-left">
-                About
-              </h1>
-
-              <div className="aspect-[3/4] relative bg-surface overflow-hidden">
-                {aboutImageUrl ? (
-                  <Image
-                    src={aboutImageUrl}
-                    alt="Shay Ater"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-muted text-xs tracking-widest uppercase">Photo</span>
-                  </div>
-                )}
-              </div>
+            {/* Right column: photo */}
+            <div className="aspect-[4/5] relative bg-surface overflow-hidden">
+              {aboutImageUrl ? (
+                <Image
+                  src={aboutImageUrl}
+                  alt="Shay Ater"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-muted text-xs tracking-widest uppercase">Photo</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

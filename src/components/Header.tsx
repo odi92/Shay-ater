@@ -34,13 +34,15 @@ export function Header() {
   return (
     <>
       {/* Fixed top-left header */}
-      <div className="fixed top-0 left-0 z-50 p-6 flex flex-col items-start gap-2">
-        <span className="font-sans font-semibold text-sm text-white">Shay Ater</span>
-        <span className="font-sans text-xs text-white/70">Director of Photography</span>
+      <div className="fixed top-0 left-0 z-50 p-6 flex flex-col items-start">
+        <div>
+          <span className="block font-sans font-semibold text-sm text-white leading-tight">Shay Ater</span>
+          <span className="block font-sans text-xs text-white/70 leading-tight">Director of Photography</span>
+        </div>
         <button
           onClick={() => setSidebarOpen((prev) => !prev)}
           aria-label="Toggle navigation menu"
-          className="flex flex-col gap-[5px] p-1 mt-1 group"
+          className="flex flex-col gap-[5px] p-1 mt-4 group"
         >
           <span className="block w-6 h-[1px] bg-white group-hover:opacity-60 transition-opacity" />
           <span className="block w-4 h-[1px] bg-white group-hover:opacity-60 transition-opacity" />
