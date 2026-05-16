@@ -46,7 +46,7 @@ export default async function AboutPage() {
             {/* Left column: bio text, justified */}
             <div className="space-y-7">
               {aboutText.split('\n\n').map((paragraph, i) => (
-                <p key={i} className="font-sans text-base text-white leading-[1.85] text-justify">
+                <p key={i} className="font-sans text-[22px] font-normal text-white leading-normal text-justify">
                   {paragraph}
                 </p>
               ))}
