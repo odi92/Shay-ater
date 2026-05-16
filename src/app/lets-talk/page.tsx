@@ -30,7 +30,7 @@ export default async function LetsTalkPage() {
 
       <main className="flex-1 pt-24">
         <div className="max-w-5xl mx-auto px-8 py-12">
-          <h1 className="font-display font-light text-5xl text-white text-center mb-4">
+          <h1 className="font-title text-[30px] font-normal text-white text-center mb-4">
             Let&apos;s Talk!
           </h1>
           <p className="font-sans text-sm text-white/70 text-center mb-16">

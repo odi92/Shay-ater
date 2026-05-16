@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { DM_Sans, Cormorant_Garamond } from 'next/font/google';
+import { DM_Sans, Cormorant_Garamond, IBM_Plex_Sans } from 'next/font/google';
 import './globals.css';
 
 const dmSans = DM_Sans({
@@ -12,6 +12,13 @@ const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
   weight: ['300', '400', '500'],
   variable: '--font-cormorant',
+  display: 'swap',
+});
+
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-ibm-plex',
   display: 'swap',
 });
 
@@ -31,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${cormorant.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${cormorant.variable} ${ibmPlexSans.variable}`}>
       <body>{children}</body>
     </html>
   );

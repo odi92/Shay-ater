@@ -19,6 +19,7 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
         display: ['var(--font-cormorant)', 'Georgia', 'serif'],
+        title: ['var(--font-ibm-plex)', 'sans-serif'],
       },
       aspectRatio: {
         'cinema': '2.35 / 1',

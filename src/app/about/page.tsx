@@ -39,7 +39,7 @@ export default async function AboutPage() {
       <main className="flex-1 pt-24">
         <div className="max-w-5xl mx-auto px-8 py-12">
           {/* "About" title — centered above both columns */}
-          <h1 className="font-display text-5xl text-white text-center mb-16">About</h1>
+          <h1 className="font-title text-[30px] font-normal text-white text-center mb-16">About</h1>
 
           {/* Two columns: text left, image right */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
