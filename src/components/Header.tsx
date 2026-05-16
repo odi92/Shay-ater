@@ -36,7 +36,7 @@ export function Header() {
       {/* Fixed top-left header */}
       <div className="fixed top-0 left-0 z-50 p-6 flex flex-col items-start">
         <div>
-          <span className="block font-sans font-semibold text-sm text-white leading-tight">Shay Ater</span>
+          <span className="block font-sans font-bold text-[18px] text-white leading-tight">Shay Ater</span>
           <span className="block font-sans text-xs text-white/70 leading-tight">Director of Photography</span>
         </div>
         <button
