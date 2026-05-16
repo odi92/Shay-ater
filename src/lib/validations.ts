@@ -59,7 +59,6 @@ export function validateWork(raw: unknown): Work | null {
   if (typeof r['title'] !== 'string' || !r['title']) return null;
   if (typeof r['slug'] !== 'string' || !r['slug']) return null;
   if (typeof r['type'] !== 'string' || !r['type']) return null;
-  if (!isAspectRatio(r['aspect_ratio'])) return null;
 
   return {
     id: r['id'],
@@ -67,7 +66,7 @@ export function validateWork(raw: unknown): Work | null {
     slug: r['slug'],
     type: r['type'],
     description: typeof r['description'] === 'string' ? r['description'] : null,
-    aspectRatio: r['aspect_ratio'],
+    aspectRatio: isAspectRatio(r['aspect_ratio']) ? r['aspect_ratio'] : '16:9',
     videoUrl: typeof r['video_url'] === 'string' ? r['video_url'] : null,
     credits: parseCredits(r['credits']),
     awards:
