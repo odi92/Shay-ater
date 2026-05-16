@@ -53,7 +53,7 @@ export default async function AboutPage() {
             </div>
 
             {/* Right column: photo */}
-            <div className="aspect-[4/5] relative bg-surface overflow-hidden">
+            <div className="relative w-full h-[337px] bg-surface overflow-hidden">
               {aboutImageUrl ? (
                 <Image
                   src={aboutImageUrl}
