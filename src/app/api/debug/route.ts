@@ -1,22 +1,33 @@
 import { NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
+import { validateWorks } from '@/lib/validations';
 
 export async function GET() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
   try {
     const supabase = await createServerSupabaseClient();
-    const { data, error } = await supabase.from('works').select('id').limit(1);
+
+    // Raw count from DB (no validation)
+    const { count, error: countError } = await supabase
+      .from('works')
+      .select('*', { count: 'exact', head: true });
+
+    // Actual rows returned
+    const { data, error } = await supabase
+      .from('works')
+      .select('*')
+      .order('order_index', { ascending: true });
+
+    const validated = validateWorks(data ?? []);
+
     return NextResponse.json({
-      url_set: !!url,
-      url_prefix: url?.slice(0, 30),
-      key_set: !!key,
-      key_prefix: key?.slice(0, 20),
-      data_count: data?.length ?? 0,
-      error: error?.message ?? null,
+      db_count: count,
+      db_count_error: countError?.message ?? null,
+      rows_returned: data?.length ?? 0,
+      after_validation: validated.length,
+      fetch_error: error?.message ?? null,
+      slugs: data?.map((w) => ({ slug: w.slug, aspect_ratio: w.aspect_ratio, type: w.type })),
     });
   } catch (e) {
-    return NextResponse.json({ exception: String(e), url_set: !!url, key_set: !!key });
+    return NextResponse.json({ exception: String(e) });
   }
 }
