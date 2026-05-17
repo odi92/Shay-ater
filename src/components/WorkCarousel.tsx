@@ -25,7 +25,7 @@ function buildCarouselItems(work: Work): CarouselItem[] {
       type: 'video',
       url: work.videoUrl,
       isExternal: true,
-      thumbnail: getVideoThumbnail(work.videoUrl) ?? undefined,
+      thumbnail: work.videoThumbnailUrl ?? getVideoThumbnail(work.videoUrl) ?? undefined,
     });
   }
 
@@ -93,7 +93,7 @@ function ThumbnailItem({
 
 function MainItem({ item, title }: { item: CarouselItem; title: string }) {
   if (item.type === 'video' && item.isExternal) {
-    return <VideoPlayer url={item.url} title={title} className="absolute inset-0" />;
+    return <VideoPlayer url={item.url} title={title} className="absolute inset-0" poster={item.thumbnail} />;
   }
   if (item.type === 'image') {
     return (

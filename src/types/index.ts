@@ -25,6 +25,7 @@ export interface Work {
   description: string | null;
   aspectRatio: AspectRatio;
   videoUrl: string | null;
+  videoThumbnailUrl: string | null;
   credits: WorkCredits;
   awards: string[] | null;
   festival: string | null;

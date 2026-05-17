@@ -17,6 +17,7 @@ interface FormState {
   type: string;
   aspectRatio: AspectRatio;
   videoUrl: string;
+  videoThumbnailUrl: string;
   description: string;
   festival: string;
   awards: string;
@@ -38,6 +39,7 @@ function workToFormState(work?: Work): FormState {
     type: work?.type ?? 'Short film',
     aspectRatio: work?.aspectRatio ?? '16:9',
     videoUrl: work?.videoUrl ?? '',
+    videoThumbnailUrl: work?.videoThumbnailUrl ?? '',
     description: work?.description ?? '',
     festival: work?.festival ?? '',
     awards: work?.awards?.join('\n') ?? '',
@@ -86,6 +88,7 @@ export function AdminWorkForm({ work }: Props) {
       type: form.type,
       aspect_ratio: form.aspectRatio,
       video_url: form.videoUrl.trim() || null,
+      video_thumbnail_url: form.videoThumbnailUrl.trim() || null,
       description: form.description.trim() || null,
       festival: form.festival.trim() || null,
       awards: awards.length > 0 ? awards : null,
@@ -174,17 +177,40 @@ export function AdminWorkForm({ work }: Props) {
               ))}
             </select>
           </div>
-          <div>
-            <label className="admin-label" htmlFor="videoUrl">Video URL (Vimeo / YouTube)</label>
-            <input
-              id="videoUrl"
-              name="videoUrl"
-              type="url"
-              value={form.videoUrl}
-              onChange={handleChange}
-              className="admin-input"
-              placeholder="https://vimeo.com/..."
-            />
+          <div className="space-y-3">
+            <div>
+              <label className="admin-label" htmlFor="videoUrl">Video URL (Vimeo / YouTube)</label>
+              <input
+                id="videoUrl"
+                name="videoUrl"
+                type="url"
+                value={form.videoUrl}
+                onChange={handleChange}
+                className="admin-input"
+                placeholder="https://vimeo.com/..."
+              />
+            </div>
+            <div>
+              <label className="admin-label">Video Thumbnail</label>
+              <div className="flex gap-3 items-center">
+                {form.videoThumbnailUrl && (
+                  <img src={form.videoThumbnailUrl} alt="Thumbnail preview" className="h-16 object-cover rounded" />
+                )}
+                <CloudinaryUpload
+                  label={form.videoThumbnailUrl ? 'Replace Thumbnail' : 'Upload Thumbnail'}
+                  onUpload={(url) => setForm((prev) => ({ ...prev, videoThumbnailUrl: url }))}
+                />
+                {form.videoThumbnailUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setForm((prev) => ({ ...prev, videoThumbnailUrl: '' }))}
+                    className="text-xs text-white/40 hover:text-white transition-colors"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 

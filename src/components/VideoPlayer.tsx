@@ -9,12 +9,13 @@ interface Props {
   title?: string;
   className?: string;
   autoplayOnLoad?: boolean;
+  poster?: string | null;
 }
 
-export function VideoPlayer({ url, title, className = '', autoplayOnLoad = false }: Props) {
+export function VideoPlayer({ url, title, className = '', autoplayOnLoad = false, poster }: Props) {
   const [playing, setPlaying] = useState(autoplayOnLoad);
   const embedUrl = getVideoEmbedUrl(url);
-  const thumbnail = getVideoThumbnail(url);
+  const thumbnail = poster ?? getVideoThumbnail(url);
 
   if (!embedUrl) {
     return (

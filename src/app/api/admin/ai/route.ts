@@ -135,6 +135,7 @@ export async function POST(request: NextRequest) {
       description: typeof fields.description === 'string' ? fields.description : null,
       aspect_ratio: isAspectRatio(fields.aspectRatio) ? fields.aspectRatio : '16:9',
       video_url: typeof fields.videoUrl === 'string' ? fields.videoUrl : null,
+      video_thumbnail_url: null,
       credits: fields.credits ?? {},
       awards: Array.isArray(fields.awards) ? fields.awards : null,
       festival: typeof fields.festival === 'string' ? fields.festival : null,

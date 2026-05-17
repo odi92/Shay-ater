@@ -68,6 +68,7 @@ export function validateWork(raw: unknown): Work | null {
     description: typeof r['description'] === 'string' ? r['description'] : null,
     aspectRatio: isAspectRatio(r['aspect_ratio']) ? r['aspect_ratio'] : '16:9',
     videoUrl: typeof r['video_url'] === 'string' ? r['video_url'] : null,
+    videoThumbnailUrl: typeof r['video_thumbnail_url'] === 'string' ? r['video_thumbnail_url'] : null,
     credits: parseCredits(r['credits']),
     awards:
       Array.isArray(r['awards']) && r['awards'].every((a) => typeof a === 'string')

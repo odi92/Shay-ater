@@ -6,6 +6,7 @@ export type WorkRow = {
   description: string | null;
   aspect_ratio: string;
   video_url: string | null;
+  video_thumbnail_url: string | null;
   credits: Record<string, string | null | undefined>;
   awards: string[] | null;
   festival: string | null;
@@ -42,6 +43,7 @@ export type WorkInsert = {
   description: string | null;
   aspect_ratio: string;
   video_url: string | null;
+  video_thumbnail_url: string | null;
   credits: Record<string, string | null | undefined>;
   awards: string[] | null;
   festival: string | null;
