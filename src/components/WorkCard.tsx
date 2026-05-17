@@ -30,10 +30,10 @@ export function WorkCard({ work }: Props) {
         {/* Title: always visible on mobile, hover-only on desktop */}
         <div className="absolute inset-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="text-center px-8">
-            <p className="text-white text-xs tracking-widest uppercase mb-2">{work.type}</p>
-            <h2 className="text-white font-sans font-bold text-[18px] leading-tight">
+            <h2 className="text-white font-sans font-bold text-[18px] leading-tight mb-2">
               {work.title}
             </h2>
+            <p className="text-white text-xs tracking-widest uppercase">{work.type}</p>
           </div>
         </div>
       </div>
