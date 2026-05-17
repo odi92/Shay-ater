@@ -91,15 +91,10 @@ export default async function WorkPage({ params }: PageProps) {
             {(work.festival ?? (work.awards && work.awards.length > 0)) && (
               <div className="space-y-2">
                 {work.festival && (
-                  <p className="text-xs text-white/50">
-                    <span className="text-white/30">Premiered at </span>
-                    {work.festival}
-                  </p>
+                  <p className="work-detail">{work.festival}</p>
                 )}
                 {work.awards?.map((award, i) => (
-                  <p key={i} className="text-xs text-white/50">
-                    {award}
-                  </p>
+                  <p key={i} className="work-detail">{award}</p>
                 ))}
               </div>
             )}

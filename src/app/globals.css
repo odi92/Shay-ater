@@ -86,4 +86,9 @@
   .body-text {
     @apply font-sans text-[22px] font-normal text-white leading-normal text-left md:text-justify;
   }
+
+  /* Awards / festival lines on single work page */
+  .work-detail {
+    @apply font-sans font-bold text-[14px] text-white;
+  }
 }
