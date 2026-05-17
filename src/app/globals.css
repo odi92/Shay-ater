@@ -84,6 +84,6 @@
 
   /* Long-form body text (e.g. About bio) */
   .body-text {
-    @apply font-sans text-[22px] font-normal text-white leading-normal text-justify;
+    @apply font-sans text-[22px] font-normal text-white leading-normal text-left md:text-justify;
   }
 }

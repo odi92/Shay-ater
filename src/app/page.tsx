@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { validateSiteSettings } from '@/lib/validations';
 import { VideoPlayer } from '@/components/VideoPlayer';
+import { Footer } from '@/components/Footer';
 
 async function getSiteSettings() {
   try {
@@ -54,8 +55,8 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Social footer */}
-      <div className="mt-auto pt-10 pb-14 flex items-center gap-6">
+      {/* Social links */}
+      <div className="mt-auto pt-10 flex items-center gap-6">
         {imdbUrl && (
           <a
             href={imdbUrl}
@@ -80,6 +81,7 @@ export default async function HomePage() {
           </a>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

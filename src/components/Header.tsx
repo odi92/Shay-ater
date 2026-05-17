@@ -14,11 +14,20 @@ const NAV_ITEMS = [
 export function Header() {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSidebarOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 10);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     if (sidebarOpen) {
@@ -34,7 +43,7 @@ export function Header() {
   return (
     <>
       {/* Fixed top-left header */}
-      <div className="fixed top-0 left-0 z-50 p-6 flex flex-col items-start">
+      <div className={`fixed top-0 left-0 z-50 p-6 flex flex-col items-start transition-colors duration-300 ${scrolled ? 'bg-black/90 backdrop-blur-sm' : ''}`}>
         <Link href="/" className="hover:opacity-70 transition-opacity">
           <span className="block font-sans font-bold text-[18px] text-white leading-tight">Shay Ater</span>
           <span className="block font-sans font-normal text-[15px] text-white leading-tight">Director of Photography</span>
