@@ -1,3 +1,4 @@
+export const revalidate = 3600;
 import Link from 'next/link';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { validateSiteSettings } from '@/lib/validations';

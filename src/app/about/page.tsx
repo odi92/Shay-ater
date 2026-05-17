@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+
+export const revalidate = 3600;
 import Image from 'next/image';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { validateSiteSettings } from '@/lib/validations';
