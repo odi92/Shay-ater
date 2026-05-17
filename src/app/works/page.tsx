@@ -45,7 +45,7 @@ export default async function WorksPage() {
       <Header />
 
       <main className="flex-1 pt-24">
-        <h1 className="font-title text-[30px] font-normal text-white text-center mb-8">
+        <h1 className="page-title mb-8">
           Selected Works
         </h1>
 
@@ -62,7 +62,7 @@ export default async function WorksPage() {
         )}
       </main>
 
-      <Footer settings={settings} />
+      <Footer />
     </div>
   );
 }

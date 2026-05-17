@@ -76,12 +76,12 @@ export function ContactForm() {
   }
 
   return (
-    <div className="border border-white/20 p-8">
-      <p className="font-sans font-semibold text-sm text-white text-center mb-6">Contact Me</p>
+    <div className="border border-white/30 p-6">
+      <p className="font-sans font-bold text-sm text-white text-center mb-5">Contact Me</p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
         <div>
-          <label htmlFor="name" className="block text-xs text-white/60 mb-1">
+          <label htmlFor="name" className="block text-sm text-white mb-1">
             Name:
           </label>
           <input
@@ -91,13 +91,13 @@ export function ContactForm() {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full bg-transparent border-b border-white/30 text-white text-sm py-2 focus:outline-none focus:border-white transition-colors"
+            className="w-full bg-transparent border-b border-white/40 text-white text-sm py-1.5 focus:outline-none focus:border-white transition-colors"
             autoComplete="name"
           />
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-xs text-white/60 mb-1">
+          <label htmlFor="email" className="block text-sm text-white mb-1">
             Email:
           </label>
           <input
@@ -107,13 +107,13 @@ export function ContactForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full bg-transparent border-b border-white/30 text-white text-sm py-2 focus:outline-none focus:border-white transition-colors"
+            className="w-full bg-transparent border-b border-white/40 text-white text-sm py-1.5 focus:outline-none focus:border-white transition-colors"
             autoComplete="email"
           />
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-xs text-white/60 mb-1">
+          <label htmlFor="message" className="block text-sm text-white mb-1">
             Your Message here:
           </label>
           <textarea
@@ -122,7 +122,7 @@ export function ContactForm() {
             required
             value={formData.message}
             onChange={handleChange}
-            className="w-full bg-transparent border-b border-white/30 text-white text-sm py-2 focus:outline-none focus:border-white transition-colors resize-none h-24"
+            className="w-full bg-white/10 text-white text-sm p-2 focus:outline-none resize-none h-28 mt-1"
           />
         </div>
 
@@ -130,11 +130,11 @@ export function ContactForm() {
           <p className="text-red-400 text-sm">{errorMessage}</p>
         )}
 
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-2">
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="text-xs border border-white/40 px-4 py-1.5 text-white hover:bg-white hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-sm border border-white px-4 py-1 text-white hover:bg-white hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === 'loading' ? 'Sending...' : 'Send'}
           </button>

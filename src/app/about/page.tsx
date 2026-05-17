@@ -39,14 +39,14 @@ export default async function AboutPage() {
       <main className="flex-1 pt-24">
         <div className="max-w-5xl mx-auto px-8 py-12">
           {/* "About" title — centered above both columns */}
-          <h1 className="font-title text-[30px] font-normal text-white text-center mb-16">About</h1>
+          <h1 className="page-title mb-16">About</h1>
 
           {/* Two columns: text left, image right */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
             {/* Left column: bio text, justified */}
             <div className="space-y-7">
               {aboutText.split('\n\n').map((paragraph, i) => (
-                <p key={i} className="font-sans text-[22px] font-normal text-white leading-normal text-justify">
+                <p key={i} className="body-text">
                   {paragraph}
                 </p>
               ))}
@@ -73,7 +73,7 @@ export default async function AboutPage() {
         </div>
       </main>
 
-      <Footer settings={settings} />
+      <Footer />
     </div>
   );
 }

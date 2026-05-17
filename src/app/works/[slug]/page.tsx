@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { validateWork, validateSiteSettings } from '@/lib/validations';
@@ -61,24 +62,25 @@ export default async function WorkPage({ params }: PageProps) {
 
       <main className="flex-1 pt-24 pb-12">
         <div className="max-w-5xl mx-auto px-4 md:px-8">
+          <Link href="/works" className="inline-block font-sans text-sm text-white/50 hover:text-white transition-colors mb-6">
+            ← Back to Selected Works
+          </Link>
           <WorkCarousel work={work} />
 
           <div className="mt-12">
-            <p className="text-xs text-white/50 uppercase tracking-widest mb-2">
-              {work.type}
-            </p>
-            <h1 className="font-display font-light text-4xl text-white mb-6">
+            <h1 className="work-title mb-2">
               {work.title}
             </h1>
+            <p className="work-meta mb-6">
+              {work.type}
+            </p>
 
             {credits.length > 0 && (
               <dl className="space-y-3 mb-8">
                 {credits.map(({ label, value }) => (
                   <div key={label} className="flex gap-4">
-                    <dt className="text-xs text-white/40 uppercase tracking-widest w-32 shrink-0">
-                      {label}
-                    </dt>
-                    <dd className="text-sm text-white/70">{value}</dd>
+                    <dt className="work-meta w-32 shrink-0">{label}</dt>
+                    <dd className="work-meta">{value}</dd>
                   </div>
                 ))}
               </dl>
@@ -103,7 +105,7 @@ export default async function WorkPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer settings={settings} />
+      <Footer />
     </div>
   );
 }

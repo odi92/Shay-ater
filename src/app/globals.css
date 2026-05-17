@@ -59,4 +59,31 @@
   .admin-label {
     @apply block text-xs tracking-widest uppercase text-secondary mb-2;
   }
+
+  /* ── Global typography ── */
+
+  /* Inner page titles: About, Let's Talk, Selected Works */
+  .page-title {
+    @apply font-title text-[30px] font-normal text-white text-center;
+  }
+
+  /* Individual work title on single work page */
+  .work-title {
+    @apply font-title text-[32px] font-normal text-white;
+  }
+
+  /* Work type, credits labels/values */
+  .work-meta {
+    @apply font-title text-[16px] font-normal text-white;
+  }
+
+  /* Page subtitle (e.g. Let's Talk description) */
+  .page-subtitle {
+    @apply font-sans text-[17px] font-normal text-white text-center;
+  }
+
+  /* Long-form body text (e.g. About bio) */
+  .body-text {
+    @apply font-sans text-[22px] font-normal text-white leading-normal text-justify;
+  }
 }
