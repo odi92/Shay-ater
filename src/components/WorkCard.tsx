@@ -31,7 +31,7 @@ export function WorkCard({ work }: Props) {
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="text-center px-8">
             <p className="text-white text-xs tracking-widest uppercase mb-2">{work.type}</p>
-            <h2 className="text-white font-display font-light text-2xl md:text-3xl leading-tight">
+            <h2 className="text-white font-sans font-bold text-[18px] leading-tight">
               {work.title}
             </h2>
           </div>
