@@ -54,7 +54,7 @@ export default async function WorksPage() {
             <p className="text-muted text-xs tracking-widest uppercase">No works yet</p>
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto flex flex-col">
+          <div className="max-w-4xl mx-auto flex flex-col gap-[30px]">
             {works.map((work) => (
               <WorkCard key={work.id} work={work} />
             ))}
