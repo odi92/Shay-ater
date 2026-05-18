@@ -51,7 +51,7 @@ export default async function HomePage() {
       <div className="w-full max-w-3xl">
         <div className="w-full aspect-video relative bg-surface">
           {videoUrl && (
-            <VideoPlayer url={videoUrl} title="Shay Ater — Showreel" className="absolute inset-0" />
+            <VideoPlayer url={videoUrl} title="Shay Ater — Showreel" className="absolute inset-0" ambient />
           )}
         </div>
       </div>

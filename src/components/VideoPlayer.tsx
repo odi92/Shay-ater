@@ -10,12 +10,35 @@ interface Props {
   className?: string;
   autoplayOnLoad?: boolean;
   poster?: string | null;
+  ambient?: boolean;
 }
 
-export function VideoPlayer({ url, title, className = '', autoplayOnLoad = false, poster }: Props) {
+export function VideoPlayer({ url, title, className = '', autoplayOnLoad = false, poster, ambient = false }: Props) {
   const [playing, setPlaying] = useState(autoplayOnLoad);
   const embedUrl = getVideoEmbedUrl(url);
   const thumbnail = poster ?? getVideoThumbnail(url);
+
+  // Ambient mode: muted autoloop with no controls, no interaction
+  if (ambient && embedUrl) {
+    // Extract video ID for the `playlist` param YouTube needs for looping
+    const ytIdMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    const ytId = ytIdMatch?.[1];
+    const ambientSrc = ytId
+      ? `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&playsinline=1`
+      : `${embedUrl}&autoplay=1&mute=1&controls=0&loop=1&rel=0`;
+    return (
+      <div className={`relative w-full h-full ${className}`}>
+        <iframe
+          src={ambientSrc}
+          allow="autoplay; fullscreen"
+          className="w-full h-full"
+          title={title ?? 'Video'}
+        />
+        {/* Transparent overlay blocks player UI interaction */}
+        <div className="absolute inset-0" aria-hidden="true" />
+      </div>
+    );
+  }
 
   if (!embedUrl) {
     return (
